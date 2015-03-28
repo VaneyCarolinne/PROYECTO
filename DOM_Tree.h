@@ -1,9 +1,9 @@
 #ifndef DOM_H
 #define DOM_H
 #include <list>
-#include<iostream>
+#include <iostream>
 #include "Node.h"
-#include "element.h"
+#include "Element.h"
 using std::list;
 class DOM_Tree
 {
@@ -19,7 +19,8 @@ class DOM_Tree
 		DOM_Tree(Element parameter,list< DOM_Tree > x);
 		Element childNode(int pos);	
 		void appendChild(int pos , DOM_Tree adding);
-		void removeChild(int pos);	
+		void removeChild(int pos);
+		void replaceChild(int pos, DOM_Tree &subArbol);	
 		DOM_Tree getElementByID();
 		~DOM_Tree();//Destruye el árbol. 
 			
@@ -38,6 +39,30 @@ Node * DOM_Tree::copiar(Node *p)
 		}
 	
 }
+void DOM_Tree::replaceChild(int pos, DOM_Tree &subArbol)
+{
+	int i;
+	Node* aux,*aux2;
+	aux=First->firstChild();
+	aux2=aux->nextSibling();
+	if(pos==1)
+	{
+		aux->setNextSibling(NULL);
+		First->setFirstChild(subArbol.First);
+		subArbol.First->setNextSibling(aux2);
+		destruir(aux);	
+	}else{
+		for(i=2;i<pos;i++)
+		{
+			aux=aux2;
+			aux2=aux2->nextSibling();
+		}
+		aux->setNextSibling(subArbol.First);
+		subArbol.First->setNextSibling(aux2->nextSibling());
+		aux2->setNextSibling(NULL);
+		destruir(aux2);
+	}		
+}	
 /********************************destructor *********************************/
 
 void DOM_Tree::destruir(Node *apRaiz)
