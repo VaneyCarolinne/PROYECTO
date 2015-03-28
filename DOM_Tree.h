@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 #ifndef DOM_H
 #define DOM_H
 #include <list>
@@ -8,8 +16,6 @@ using std::list;
 class DOM_Tree
 {
 	private:
-		
-		
 		Node *First;
 		Node *copiar(Node *p);
 		void destruir(Node *apRaiz);
@@ -98,5 +104,27 @@ DOM_Tree& DOM_Tree::operator=(const DOM_Tree&orig)
 		}
 		return *this;
 }
+DOM_Tree::DOM_Tree(Element parameter,list< DOM_Tree > x)
+{
+	
+	Node *creado,*a;
+		
+		if(!x.empty()){
+			First= new  Node(parameter);
+			creado=copiar(x.front().First);
+			First->setFirstChild(creado);
+			x.pop_front();
+			a=creado;
+			while(!x.empty())
+			{
+				
+				creado=copiar(x.front().First);
+				a->setNextSibling(creado);
+				x.pop_front();
+				a=creado;
+			}
+		}
 
+	
+}
 #endif
