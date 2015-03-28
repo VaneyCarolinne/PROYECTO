@@ -16,6 +16,7 @@ class DOM_Tree
 	public :
 		DOM_Tree();
 		DOM_Tree(const DOM_Tree &copying);
+		DOM_Tree& operator=(const DOM_Tree &orig);
 		DOM_Tree(Element parameter,list< DOM_Tree > x);
 		Element childNode(int pos);	
 		void appendChild(int pos , DOM_Tree adding);
@@ -114,6 +115,13 @@ void DOM_Tree::removeChild(int pos)
 		cout << "Se intento eliminar un SubArbol Inexistente" <<std::endl;
 	}	
 }
-
+DOM_Tree& DOM_Tree::operator=(const DOM_Tree&orig)
+{
+		if (this != &orig)
+		{  destruir(First);
+		First=copiar(orig.First);
+		}
+		return *this;
+}
 
 #endif
