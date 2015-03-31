@@ -118,10 +118,7 @@ void DOM_Tree::appendChild(int pos,DOM_Tree &a){
 	
 	Node *aux,*aux2,*aux3;
 	int p=1;
-<<<<<<< HEAD
 	aux2=a.First;
-=======
->>>>>>> 8f4218f744351d9b7974c6654bb0e1ad85effa64
 	if(pos==1 && First->firstChild()==NULL){
 		First->setFirstChild(copiar(a.First));
 	}
