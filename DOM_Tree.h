@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-=======
- 
-
-
-
-
-
-
-
->>>>>>> ade66e96b6f9f591ce6db9b7c63076d403d8632c
 #ifndef DOM_H
 #define DOM_H
 #include <list>
@@ -27,6 +16,7 @@ class DOM_Tree
 		void buscar(Element e,Node *aux,Node &found);
 	public :
 		DOM_Tree():First(NULL){}
+		DOM_Tree(Element e);
 		DOM_Tree(const DOM_Tree &copying);
 		DOM_Tree& operator=(const DOM_Tree &orig);
 		DOM_Tree(Element parameter,list< DOM_Tree > x);
@@ -37,9 +27,12 @@ class DOM_Tree
 		DOM_Tree getElementByID(Element e);
 		~DOM_Tree();//Destruye el árbol. 
 			
-	};
+};
 
-
+DOM_Tree::DOM_Tree(Element e)
+{	
+	First= new Node(e,NULL,NULL);
+}
 Node * DOM_Tree::copiar(Node *p)
 {
 	if(p!=NULL)
