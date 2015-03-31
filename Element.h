@@ -14,6 +14,7 @@ class Element{
 		list<string> attrList;
 	public:
 		Element();
+		Element(const Element &copying);
 		Element(string t,list<string> l,string i);
 		string getTagName();
 		list<string> attributeList();
@@ -21,13 +22,18 @@ class Element{
 		void setTagName(string t);
 		void setAttributeList(list<string> l);
 		void setInnerHTML(string h);
+		void operator=(const Element &R);
+		bool operator==(const Element &R);
 };
 
 Element:: Element(){
 	tagName= " ";
 	innerHTML= " ";
 }
-
+Element:: Element(const Element &copying)
+{
+	*this=copying;	
+}
 Element:: Element(string t,list<string> l,string i){
 	tagName= t;
 	attrList= l;
@@ -58,5 +64,23 @@ void Element:: setInnerHTML(string i){
 	innerHTML= i;
 }
 
-
+void Element:: operator=(const Element &R)
+{
+	if(this!=&R){
+		tagName=R.tagName;
+		innerHTML=R.innerHTML;
+		attrList=R.attrList;
+	}		
+}
+bool Element:: operator==(const Element &R)
+{
+	if(this!=&R){
+		if(R.tagName!=tagName||R.innerHTML!=innerHTML||R.attrList!=attrList)
+		{
+			return(false);	
+		}else{
+			return(true);	
+		}
+	}	
+}
 #endif
