@@ -3,21 +3,41 @@
 
 #include <iostream>
 #include <list>
+<<<<<<< HEAD
 #include "Element.h"
 #include "Node.h"
 
+=======
+#include <iostream>
+#include "Node.h"
+#include "Element.h"
+>>>>>>> bf4321d15e60bf1078763b1fb5a63a782af28fed
 using std::list;
 
 class DOM_Tree
 {
 	private:
+<<<<<<< HEAD
+=======
+	//atributos
+>>>>>>> bf4321d15e60bf1078763b1fb5a63a782af28fed
 		Node *First;
+	//Métodos:	
 		Node *copiar(Node *p);
 		void destruir(Node *apRaiz);
+<<<<<<< HEAD
 	public:
 		DOM_Tree();
+=======
+		void buscar(Element e,Node *aux,Node &found);
+	public :
+		DOM_Tree():First(NULL){}
+		DOM_Tree(Element e);
+>>>>>>> bf4321d15e60bf1078763b1fb5a63a782af28fed
 		DOM_Tree(const DOM_Tree &copying);
+		DOM_Tree& operator=(const DOM_Tree &orig);
 		DOM_Tree(Element parameter,list< DOM_Tree > x);
+<<<<<<< HEAD
 		DOM_Tree childNode(int pos);	
 		void appendChild(int pos,DOM_Tree a);
 		void appendChild(DOM_Tree a);
@@ -81,7 +101,21 @@ void DOM_Tree::appendChild(DOM_Tree a){
 		aux->setFirstChild(aux2);
 	}
 }
+=======
+		Element childNode(int pos);	
+		void appendChild(int pos , DOM_Tree adding);
+		void removeChild(int pos);
+		void replaceChild(int pos, DOM_Tree &subArbol);	
+		DOM_Tree getElementByID(Element e);
+		~DOM_Tree();//Destruye el árbol. 
+			
+};
+>>>>>>> bf4321d15e60bf1078763b1fb5a63a782af28fed
 
+DOM_Tree::DOM_Tree(Element e)
+{	
+	First= new Node(e,NULL,NULL);
+}
 Node * DOM_Tree::copiar(Node *p)
 {
 	if(p!=NULL)
@@ -94,6 +128,30 @@ Node * DOM_Tree::copiar(Node *p)
 		}
 	
 }
+void DOM_Tree::replaceChild(int pos, DOM_Tree &subArbol)
+{
+	int i;
+	Node* aux,*aux2;
+	aux=First->firstChild();
+	aux2=aux->nextSibling();
+	if(pos==1)
+	{
+		aux->setNextSibling(NULL);
+		First->setFirstChild(subArbol.First);
+		subArbol.First->setNextSibling(aux2);
+		destruir(aux);	
+	}else{
+		for(i=2;i<pos;i++)
+		{
+			aux=aux2;
+			aux2=aux2->nextSibling();
+		}
+		aux->setNextSibling(subArbol.First);
+		subArbol.First->setNextSibling(aux2->nextSibling());
+		aux2->setNextSibling(NULL);
+		destruir(aux2);
+	}		
+}	
 /********************************destructor *********************************/
 
 void DOM_Tree::destruir(Node *apRaiz)
@@ -145,6 +203,66 @@ void DOM_Tree::removeChild(int pos)
 	}else{
 		cout << "Se intento eliminar un SubArbol Inexistente" <<std::endl;
 	}	
+}
+DOM_Tree& DOM_Tree::operator=(const DOM_Tree&orig)
+{
+		if (this != &orig)
+		{  destruir(First);
+		First=copiar(orig.First);
+		}
+		return *this;
+}
+DOM_Tree::DOM_Tree(Element parameter,list< DOM_Tree > x)
+{
+	
+	Node *creado,*a;
+		
+		if(!x.empty()){
+			First= new  Node(parameter);
+			creado=copiar(x.front().First);
+			First->setFirstChild(creado);
+			x.pop_front();
+			a=creado;
+			while(!x.empty())
+			{
+				
+				creado=copiar(x.front().First);
+				a->setNextSibling(creado);
+				x.pop_front();
+				a=creado;
+			}
+		}
+
+
+}
+void DOM_Tree::buscar(Element e,Node *aux,Node &found)
+{
+	if(aux!=NULL)
+	{
+		if(e==aux->element())
+		{
+			found=*aux;
+		}
+		else{
+			buscar(e,aux->firstChild(),found);
+			buscar(e,aux->nextSibling(),found);
+			
+			
+		}
+		
+	}
+	
+}
+
+DOM_Tree DOM_Tree ::getElementByID(Element e)
+{
+	DOM_Tree r;
+	Node *aux;
+	aux=NULL;
+	buscar(e,First,*aux);
+	r.First=copiar(aux);
+	return (r);
+	
 }
 
 
