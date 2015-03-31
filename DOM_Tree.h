@@ -70,6 +70,7 @@ DOM_Tree::DOM_Tree(const DOM_Tree &copying)
 /*****************************/
 /***Métodos de Inspección:****/
 /*****************************/
+
 DOM_Tree DOM_Tree::childNode(int pos){
 	Node *aux,*aux2;
 	DOM_Tree a;
@@ -117,41 +118,45 @@ void DOM_Tree::appendChild(int pos,DOM_Tree &a){
 	
 	Node *aux,*aux2,*aux3;
 	int p=1;
-	aux=First;
-	aux=aux->firstChild();
 	aux2=a.First;
-	if(pos==1 && aux->firstChild()==NULL){
-		aux->setFirstChild(aux2);
+	if(pos==1 && First->firstChild()==NULL){
+		First->setFirstChild(copiar(a.First));
 	}
 	else{
-		aux=aux->firstChild();
+		aux=First->firstChild();
+		aux3=aux;
 		while(p<pos && aux->nextSibling()!=NULL){
 			aux3=aux;
 			aux=aux->nextSibling();
 			p++;
 		}
 		if(p==pos){
-			aux3->setNextSibling(aux2);
+			aux3->setNextSibling(copiar(a.First));
+			aux2=aux3->nextSibling();
 			aux2->setNextSibling(aux);
+		}
+		else{
+			if(p+1==pos){
+				aux3->setNextSibling(copiar(a.First));
+				aux2=aux3->nextSibling();
+				aux2->setNextSibling(NULL);
+			}
 		}
 	}
 }
 	
 void DOM_Tree::appendChild(DOM_Tree &a){
 	
-	Node *aux,*aux2;
-	aux=First;
-	aux=aux->firstChild();
-	aux2=a.First;
-	if(aux->firstChild()==NULL){
-		aux->setFirstChild(aux2);
+	Node *aux;
+	if(First->firstChild()==NULL){
+		First->setFirstChild(copiar(a.First));
 	}
 	else{
-		aux=aux->firstChild();
+		aux=First->firstChild();
 		while(aux->nextSibling()!=NULL){
 			aux=aux->nextSibling();
 		}
-		aux->setNextSibling(aux2);
+		aux->setNextSibling(copiar(a.First));
 	}
 }
 Node * DOM_Tree::copiar(Node *p)
