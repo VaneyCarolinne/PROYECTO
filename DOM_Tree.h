@@ -20,8 +20,9 @@ class DOM_Tree
 		DOM_Tree(const DOM_Tree &copying);
 		DOM_Tree& operator=(const DOM_Tree &orig);
 		DOM_Tree(Element parameter,list< DOM_Tree > x);
-		Element childNode(int pos);	
-		void appendChild(int pos , DOM_Tree adding);
+		DOM_Tree childNode(int pos);
+		void appendChild(int pos,DOM_Tree a);
+		void appendChild(DOM_Tree a);
 		void removeChild(int pos);
 		void replaceChild(int pos, DOM_Tree &subArbol);	
 		DOM_Tree getElementByID(Element e);
@@ -68,7 +69,64 @@ void DOM_Tree::replaceChild(int pos, DOM_Tree &subArbol)
 		aux2->setNextSibling(NULL);
 		destruir(aux2);
 	}		
-}	
+}
+DOM_Tree DOM_Tree::childNode(int pos){
+	Node *aux,*aux2;
+	DOM_Tree a;
+	int p=1;
+	aux=First;
+	aux=aux->firstChild();
+	while(p<pos && aux->nextSibling()!=NULL){
+		p++;
+		aux=aux->nextSibling();
+	}
+	if(p==pos){
+		aux2=aux->nextSibling();
+		aux->setNextSibling(NULL);
+		a.First=copiar(aux);
+	}
+	return a;
+}
+
+void DOM_Tree::appendChild(int pos,DOM_Tree a){
+	
+	Node *aux,*aux2,*aux3;
+	int p=1;
+	aux=First;
+	aux2=a.First;
+	if(pos==1 && aux->firstChild()==NULL){
+		aux->setFirstChild(aux2);
+	}
+	else{
+		aux=aux->firstChild();
+		while(p<pos && aux->nextSibling()!=NULL){
+			aux3=aux;
+			aux=aux->nextSibling();
+			p++;
+		}
+		if(p==pos){
+			aux3->setNextSibling(aux2);
+			aux2->setNextSibling(aux);
+		}
+	}
+}
+	
+void DOM_Tree::appendChild(DOM_Tree a){
+	
+	Node *aux,*aux2;
+	aux=First;
+	aux2=a.First;
+	if(aux->firstChild()==NULL){
+		aux->setFirstChild(aux2);
+	}
+	else{
+		aux=aux->firstChild();
+		while(aux->nextSibling()!=NULL){
+			aux=aux->nextSibling();
+		}
+		aux->setFirstChild(aux2);
+	}
+}
 /********************************destructor *********************************/
 
 void DOM_Tree::destruir(Node *apRaiz)
