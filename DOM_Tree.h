@@ -136,6 +136,7 @@ void DOM_Tree::appendChild(DOM_Tree a){
 	
 	Node *aux,*aux2;
 	aux=First;
+	aux=aux->firstChild();
 	aux2=a.First;
 	if(aux->firstChild()==NULL){
 		aux->setFirstChild(aux2);
@@ -145,7 +146,7 @@ void DOM_Tree::appendChild(DOM_Tree a){
 		while(aux->nextSibling()!=NULL){
 			aux=aux->nextSibling();
 		}
-		aux->setFirstChild(aux2);
+		aux->setNextSibling(aux2);
 	}
 }
 Node * DOM_Tree::copiar(Node *p)
