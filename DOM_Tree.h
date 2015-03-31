@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 #ifndef DOM_H
 #define DOM_H
 #include <list>
@@ -16,11 +8,13 @@ using std::list;
 class DOM_Tree
 {
 	private:
+	//atributos
 		Node *First;
+	//Métodos:	
 		Node *copiar(Node *p);
 		void destruir(Node *apRaiz);
 	public :
-		DOM_Tree();
+		DOM_Tree():First(NULL){}
 		DOM_Tree(const DOM_Tree &copying);
 		DOM_Tree& operator=(const DOM_Tree &orig);
 		DOM_Tree(Element parameter,list< DOM_Tree > x);
