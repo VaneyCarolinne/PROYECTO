@@ -26,8 +26,8 @@ class DOM_Tree
 		DOM_Tree childNode(int pos);
 		DOM_Tree getElementByID(Element e);
 		//Metodos de Modificacion:
-		void appendChild(int pos,DOM_Tree a);
-		void appendChild(DOM_Tree a);
+		void appendChild(int pos,DOM_Tree &a);
+		void appendChild(DOM_Tree &a);
 		void removeChild(int pos);
 		void replaceChild(int pos, DOM_Tree &subArbol);	
 		//Sobrecarga de operadores:
@@ -62,6 +62,10 @@ DOM_Tree::DOM_Tree(Element parameter,list< DOM_Tree > x)
 				a=creado;
 			}
 		}
+}
+DOM_Tree::DOM_Tree(const DOM_Tree &copying)
+{
+		*this=copying;
 }
 /*****************************/
 /***Métodos de Inspección:****/
@@ -109,11 +113,12 @@ void DOM_Tree::buscar(Element e,Node *aux,Node &found)
 /*****************************/
 /****Métodos Modificadores:***/
 /*****************************/
-void DOM_Tree::appendChild(int pos,DOM_Tree a){
+void DOM_Tree::appendChild(int pos,DOM_Tree &a){
 	
 	Node *aux,*aux2,*aux3;
 	int p=1;
 	aux=First;
+	aux=aux->firstChild();
 	aux2=a.First;
 	if(pos==1 && aux->firstChild()==NULL){
 		aux->setFirstChild(aux2);
@@ -132,7 +137,7 @@ void DOM_Tree::appendChild(int pos,DOM_Tree a){
 	}
 }
 	
-void DOM_Tree::appendChild(DOM_Tree a){
+void DOM_Tree::appendChild(DOM_Tree &a){
 	
 	Node *aux,*aux2;
 	aux=First;
