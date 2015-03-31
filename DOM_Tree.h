@@ -1,4 +1,4 @@
-
+ 
 
 
 
@@ -19,6 +19,7 @@ class DOM_Tree
 		Node *First;
 		Node *copiar(Node *p);
 		void destruir(Node *apRaiz);
+		void buscar(Element e,Node *aux,Node &found);
 	public :
 		DOM_Tree();
 		DOM_Tree(const DOM_Tree &copying);
@@ -28,7 +29,7 @@ class DOM_Tree
 		void appendChild(int pos , DOM_Tree adding);
 		void removeChild(int pos);
 		void replaceChild(int pos, DOM_Tree &subArbol);	
-		DOM_Tree getElementByID();
+		DOM_Tree getElementByID(Element e);
 		~DOM_Tree();//Destruye el árbol. 
 			
 	};
@@ -150,6 +151,37 @@ DOM_Tree::DOM_Tree(Element parameter,list< DOM_Tree > x)
 			}
 		}
 
+
+}
+void DOM_Tree::buscar(Element e,Node *aux,Node &found)
+{
+	if(aux!=NULL)
+	{
+		if(e==aux->element())
+		{
+			found=*aux;
+		}
+		else{
+			buscar(e,aux->firstChild(),found);
+			buscar(e,aux->nextSibling(),found);
+			
+			
+		}
+		
+	}
 	
 }
+
+DOM_Tree DOM_Tree ::getElementByID(Element e)
+{
+	DOM_Tree r;
+	Node *aux;
+	aux=NULL;
+	buscar(e,First,*aux);
+	r.First=copiar(aux);
+	return (r);
+	
+}
+
+
 #endif
