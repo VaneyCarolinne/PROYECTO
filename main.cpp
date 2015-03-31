@@ -4,7 +4,7 @@ int main()
 	DOM_Tree DOM,B,C,D,E,F,G,H,V,J;
 	Element document,html,head,title,body,h1,p1,p2;
 	list<string> l;
-	list<DOM_Tree> hijos;
+	list< DOM_Tree > hijos;
 	
 	/**Carga de Página HTML**/
 	document.setTagName("document");
