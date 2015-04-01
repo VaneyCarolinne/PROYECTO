@@ -10,12 +10,12 @@ class DOM_Tree
 	private:
 	//atributos
 		Node *First;
-		//M閠odos de Inspecci髇:
+		//M茅todos de Inspecci贸n:
 	    void buscar(Element e,Node *aux,Node *&found);
-		//M閠odos de Modificaci髇
+		//M茅todos de Modificaci贸n
 		Node *copiar(Node *p);
 		void destruir(Node *apRaiz);
-	public : // (P鷅licos)
+	public : // (P煤blicos)
 		//Constructores:
 		DOM_Tree():First(NULL){}
 		DOM_Tree(Element e);
@@ -31,6 +31,7 @@ class DOM_Tree
 		void replaceChild(int pos, DOM_Tree &subArbol);	
 		//Sobrecarga de operadores:
 		void operator=(const DOM_Tree &orig);
+		friend std::ostream& operator<<(std::ostream& salida ,const DOM_Tree  &p);
 		//Destructor: 
 		~DOM_Tree();	
 }; 
@@ -69,7 +70,7 @@ DOM_Tree::DOM_Tree(const DOM_Tree &copying)
 	First=c;
 }
 /*****************************/
-/***M閠odos de Inspecci髇:****/
+/***M茅todos de Inspecci贸n:****/
 /*****************************/
 DOM_Tree DOM_Tree::childNode(int pos){
 	Node *aux;
@@ -115,7 +116,7 @@ void DOM_Tree::buscar(Element e,Node *aux,Node *&found)
 	}	
 }
 /*****************************/
-/****M閠odos Modificadores:***/
+/****M茅todos Modificadores:***/
 /*****************************/
 void DOM_Tree::appendChild(int pos,DOM_Tree &a){
 	
@@ -195,7 +196,7 @@ void DOM_Tree::replaceChild(int pos, DOM_Tree &subArbol)
 			aux2->setNextSibling(NULL);
 			destruir(aux2);
 		}else{
-			cerr << "Quiere modificar una posici髇 del 醨bol inexistente" <<endl;	
+			cerr << "Quiere modificar una posici贸n del 谩rbol inexistente" <<endl;	
 		}	
 	}		
 }
@@ -251,7 +252,7 @@ void DOM_Tree::operator=(const DOM_Tree&orig)
 		}
 }
 /*********************************/
-/**趎ico Destructor de la Clase:**/
+/**脷nico Destructor de la Clase:**/
 /*********************************/
 DOM_Tree::~DOM_Tree()
 {	
@@ -259,4 +260,14 @@ DOM_Tree::~DOM_Tree()
 		destruir(First);
 	}
 }
+std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &p)
+{
+	
+	
+	
+	return(salida);
+}
+
+
+
 #endif
