@@ -11,7 +11,7 @@ class DOM_Tree
 	//atributos
 		Node *First;
 		//Métodos de Inspección:
-	    void buscar(Element e,Node *aux,Node &found);
+	    void buscar(Element e,Node *aux,Node *&found);
 		//Métodos de Modificación
 		Node *copiar(Node *p);
 		void destruir(Node *apRaiz);
@@ -91,21 +91,26 @@ DOM_Tree DOM_Tree::getElementByID(Element e)
 	DOM_Tree r;
 	Node *aux;
 	aux=NULL;
-	buscar(e,First,*aux);
+	buscar(e,First,aux);
+	//cout<<aux->element().getTagName();
 	r.First=copiar(aux);
+	
 	return (r);
 }
-void DOM_Tree::buscar(Element e,Node *aux,Node &found)
+void DOM_Tree::buscar(Element e,Node *aux,Node *&found)
 {
 	if(aux!=NULL)
 	{
 		if(e==aux->element())
 		{
-			found=*aux;
+			found=aux;
 		}
 		else{
+			
 			buscar(e,aux->firstChild(),found);
 			buscar(e,aux->nextSibling(),found);	
+			
+			
 		}	
 	}	
 }
