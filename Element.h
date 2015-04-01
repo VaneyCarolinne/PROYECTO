@@ -74,13 +74,15 @@ void Element:: operator=(const Element &R)
 }
 bool Element:: operator==(const Element &R)
 {
+	bool band;
 	if(this!=&R){
 		if(R.tagName!=tagName||R.innerHTML!=innerHTML||R.attrList!=attrList)
 		{
-			return(false);	
+			band=false;	
 		}else{
-			return(true);	
+			band=true;	
 		}
 	}	
+	return(band);
 }
 #endif
