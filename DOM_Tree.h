@@ -170,7 +170,7 @@ Node * DOM_Tree::copiar(Node *p)
 void DOM_Tree::replaceChild(int pos, DOM_Tree &subArbol)
 {
 	int i;
-	Node* aux,*aux2;
+	Node *aux,*aux2;
 	aux=First->firstChild();
 	aux2=aux->nextSibling();
 	if(pos==1)
@@ -185,10 +185,14 @@ void DOM_Tree::replaceChild(int pos, DOM_Tree &subArbol)
 			aux=aux2;
 			aux2=aux2->nextSibling();
 		}
-		aux->setNextSibling(subArbol.First);
-		subArbol.First->setNextSibling(aux2->nextSibling());
-		aux2->setNextSibling(NULL);
-		destruir(aux2);
+		if(aux2!=NULL){
+			aux->setNextSibling(subArbol.First);
+			subArbol.First->setNextSibling(aux2->nextSibling());
+			aux2->setNextSibling(NULL);
+			destruir(aux2);
+		}else{
+			cerr << "Quiere modificar una posición del árbol inexistente" <<endl;	
+		}	
 	}		
 }
 void DOM_Tree::removeChild(int pos)
