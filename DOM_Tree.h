@@ -254,15 +254,6 @@ void DOM_Tree::operator=(const DOM_Tree&orig)
 			First=copiar(orig.First);
 		}
 }
-/*********************************/
-/**Único Destructor de la Clase:**/
-/*********************************/
-DOM_Tree::~DOM_Tree()
-{	
-	if(First!=NULL){
-		destruir(First);
-	}
-}
 std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 {
 	Node *p,*x;
@@ -312,7 +303,13 @@ std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 		}
 		return(salida);		
 }
-
-
-
+/*********************************/
+/**Único Destructor de la Clase:**/
+/*********************************/
+DOM_Tree::~DOM_Tree()
+{	
+	if(First!=NULL){
+		destruir(First);
+	}
+}
 #endif
