@@ -24,6 +24,7 @@ class Element{
 		void setInnerHTML(string h);
 		void operator=(const Element &R);
 		bool operator==(const Element &R);
+		friend std::ostream& operator<<(std::ostream& salida ,const Element &A);
 };
 
 Element:: Element(){
@@ -32,7 +33,9 @@ Element:: Element(){
 }
 Element:: Element(const Element &copying)
 {
-	*this=copying;	
+	tagName=copying.tagName;
+	innerHTML=copying.innerHTML;
+	attrList=copying.attrList;
 }
 Element:: Element(string t,list<string> l,string i){
 	tagName= t;
@@ -84,5 +87,19 @@ bool Element:: operator==(const Element &R)
 		}
 	}	
 	return(band);
+}
+std::ostream& operator<<(std::ostream& salida ,const Element &A)
+{
+	Element R=A;
+	list<string> l;
+	l=R.attributeList();
+	salida << "<" << R.getTagName();
+	while(!l.empty())
+	{
+		salida << l.front();
+		l.pop_front();	
+	}
+	salida<< ">"<<R.getInnerHTML()<<"</"<<R.getTagName()<<">"<<endl;
+	return(salida);
 }
 #endif
