@@ -34,7 +34,7 @@ class DOM_Tree
 		void replaceChild(int pos, DOM_Tree &subArbol);	
 		//Sobrecarga de operadores:
 		void operator=(const DOM_Tree &orig);
-		friend std::ostream& operator<<(std::ostream& salida ,const DOM_Tree  &p);
+		friend std::ostream& operator<<(std::ostream& salida ,const DOM_Tree  &A);
 		//Destructor: 
 		~DOM_Tree();	
 }; 
