@@ -1,10 +1,13 @@
 #ifndef DOM_H
 #define DOM_H
 #include <iostream>
+#include <iomanip>
 #include <list>
+#include <queue>
 #include "Element.h"
 #include "Node.h"
 using std::list;
+using std::queue;
 class DOM_Tree
 {
 	private:
@@ -260,12 +263,54 @@ DOM_Tree::~DOM_Tree()
 		destruir(First);
 	}
 }
-std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &p)
+std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 {
-	
-	
-	
-	return(salida);
+	Node *p,*x;
+	queue< Node* > C;
+	list< Node* > h;
+	int i=5;	
+		if(A.First!=NULL)
+		{
+			p=A.First->firstChild();
+			salida << "<!doctype html>"<<endl;
+			salida << setw(i) <<p->element();
+			i=i+5;
+			if(p->firstChild()!=NULL){
+				x=p->firstChild();	
+				h.push_back(x);
+			}
+			while(x!=NULL)
+			{
+			  if(x->nextSibling()!=NULL)	
+				h.push_back(x->nextSibling());
+			  x=x->nextSibling();
+			}
+			
+			while(!h.empty())
+			{
+				C.push(h.front());
+				p=h.front();
+				if(p->firstChild()!=NULL){
+					x=p->firstChild();	
+					h.push_back(x);
+				}
+				while(x!=NULL)
+				{
+				   if(x->nextSibling()!=NULL)		
+					h.push_back(x->nextSibling());
+				   x=x->nextSibling();
+				}
+				h.pop_front();		
+			}
+				
+			while(!C.empty())
+			{	
+				salida << setw(i) <<C.front()->element();
+				i=i+5;
+				C.pop();
+			}	
+		}
+		return(salida);		
 }
 
 
