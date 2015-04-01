@@ -8,21 +8,21 @@ int main()
 	
 	/**Carga de Página HTML**/
 	document.setTagName("document");
-		html.setTagName("<html>");
-			head.setTagName("<head>");
-				title.setTagName("<title>");
+		html.setTagName("html");
+			head.setTagName("head");
+				title.setTagName("title");
 				title.setInnerHTML("Ejemplo de Página Web");
 			//</head>
-			body.setTagName("<body>");
-				h1.setTagName("<h1>");
+			body.setTagName("body");
+				h1.setTagName("h1");
 				h1.setInnerHTML("Una Página Web");
 				//</h1>
-				p1.setTagName("<p");
+				p1.setTagName("p");
 				l.push_back("id");
 				l.push_back("=");
-				l.push_back("''Contenido''>");
+				l.push_back("'Contenido'");
 				p1.setAttributeList(l);
-				p2.setTagName("<p>");
+				p2.setTagName("p");
 				p2.setInnerHTML("Bye!!!");
 			//</body>
 		//</html>
@@ -40,13 +40,13 @@ int main()
 	E.appendChild(H);
 	B.appendChild(1,C);
 	B.appendChild(2,E);
-	hijos.push_back(B);
-	DOM=DOM_Tree(document,hijos);	
+	hijos.push_front(B);
+	DOM=DOM_Tree(document,hijos);
+	cout << DOM;	
 	J=DOM.childNode(1);
 	V=DOM.getElementByID(html);		
 	DOM.replaceChild(1,E);		
 	DOM.removeChild(1);
-	DOM.removeChild(2);	
 	
 	return 0;
 }
