@@ -72,7 +72,7 @@ DOM_Tree::DOM_Tree(const DOM_Tree &copying)
 /***Métodos de Inspección:****/
 /*****************************/
 DOM_Tree DOM_Tree::childNode(int pos){
-	Node *aux,*aux2;
+	Node *aux;
 	DOM_Tree a;
 	int p=1;
 	aux=First->firstChild();
@@ -81,7 +81,6 @@ DOM_Tree DOM_Tree::childNode(int pos){
 		aux=aux->nextSibling();
 	}
 	if(p==pos){
-		aux2=aux->nextSibling();
 		aux->setNextSibling(NULL);
 		a.First=copiar(aux);
 	}
