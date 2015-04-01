@@ -71,7 +71,6 @@ DOM_Tree::DOM_Tree(const DOM_Tree &copying)
 /*****************************/
 /***Métodos de Inspección:****/
 /*****************************/
-
 DOM_Tree DOM_Tree::childNode(int pos){
 	Node *aux,*aux2;
 	DOM_Tree a;
@@ -118,10 +117,6 @@ void DOM_Tree::appendChild(int pos,DOM_Tree &a){
 	
 	Node *aux,*aux2,*aux3;
 	int p=1;
-<<<<<<< HEAD
-	aux2=a.First;
-=======
->>>>>>> 8f4218f744351d9b7974c6654bb0e1ad85effa64
 	if(pos==1 && First->firstChild()==NULL){
 		First->setFirstChild(copiar(a.First));
 	}
@@ -143,13 +138,6 @@ void DOM_Tree::appendChild(int pos,DOM_Tree &a){
 			aux2=aux3->nextSibling();
 			aux2->setNextSibling(NULL);
 		  }		
-		}
-		else{
-			if(p+1==pos){
-				aux3->setNextSibling(copiar(a.First));
-				aux2=aux3->nextSibling();
-				aux2->setNextSibling(NULL);
-			}
 		}
 	}
 }
