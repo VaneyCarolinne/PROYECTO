@@ -22,6 +22,7 @@ int main()
 				l.push_back("=");
 				l.push_back("'Contenido'");
 				p1.setAttributeList(l);
+				p1.setInnerHTML("Hola Mundo!!!");
 				p2.setTagName("p");
 				p2.setInnerHTML("Bye!!!");
 			//</body>
