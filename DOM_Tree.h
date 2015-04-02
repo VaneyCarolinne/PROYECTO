@@ -4,10 +4,12 @@
 #include <iomanip>
 #include <list>
 #include <queue>
+#include <stack>
 #include "Element.h"
 #include "Node.h"
 using std::list;
 using std::queue;
+using std::stack;
 class DOM_Tree
 {
 	private:
@@ -15,6 +17,7 @@ class DOM_Tree
 		Node *First;
 		//Métodos de Inspección:
 	    void buscar(Element e,Node *aux,Node *&found);
+	    void mostrar(Node *p);
 		//Métodos de Modificación
 		Node *copiar(Node *p);
 		void destruir(Node *apRaiz);
@@ -256,51 +259,41 @@ void DOM_Tree::operator=(const DOM_Tree&orig)
 }
 std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 {
-	Node *p,*x;
-	queue< Node* > C;
-	list< Node* > h;
-	int i=5;	
-		if(A.First!=NULL)
+	Node *actual=A.First->firstChild();
+	stack< Node* > P,ant;
+	int i=0;
+	
+	P.push(NULL);
+	ant.push(actual);
+	salida <<"<!doctype html>"<<endl;
+	while(actual!=NULL)
+	{
+		salida << setw(i)<<actual->element();
+		if(actual->nextSibling()!=NULL)
 		{
-			p=A.First->firstChild();
-			salida << "<!doctype html>"<<endl;
-			salida << setw(i) <<p->element();
-			i=i+5;
-			if(p->firstChild()!=NULL){
-				x=p->firstChild();	
-				h.push_back(x);
-			}
-			while(x!=NULL)
-			{
-			  if(x->nextSibling()!=NULL)	
-				h.push_back(x->nextSibling());
-			  x=x->nextSibling();
-			}
-			
-			while(!h.empty())
-			{
-				C.push(h.front());
-				p=h.front();
-				if(p->firstChild()!=NULL){
-					x=p->firstChild();	
-					h.push_back(x);
-				}
-				while(x!=NULL)
-				{
-				   if(x->nextSibling()!=NULL)		
-					h.push_back(x->nextSibling());
-				   x=x->nextSibling();
-				}
-				h.pop_front();		
-			}
-				
-			while(!C.empty())
-			{	
-				salida << setw(i) <<C.front()->element();
-				i=i+5;
-				C.pop();
+			P.push(actual->nextSibling());	
+		}
+		if(actual->firstChild()!=NULL)
+		{
+			P.push(actual->firstChild());
+			cout <<endl;
+		}else{
+			salida <<"</" <<actual->element().getTagName()<<">"<<endl;
+			i=i-5;
+			if(ant.top()->firstChild()!=NULL&&actual->nextSibling()==NULL){
+				salida <<setw(i+1)<<"</" <<ant.top()->element().getTagName()<<">"<<endl;	
+				ant.pop();
 			}	
 		}
+		i=i+5;
+		if(actual->firstChild()!=NULL)
+			ant.push(actual);
+		actual=P.top();
+		P.pop();	
+	}
+	salida <<"</" <<ant.top()->element().getTagName()<<">"<<endl;	
+	ant.pop();
+
 		return(salida);		
 }
 /*********************************/
