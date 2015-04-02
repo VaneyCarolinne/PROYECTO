@@ -94,12 +94,14 @@ std::ostream& operator<<(std::ostream& salida ,const Element &A)
 	list<string> l;
 	l=R.attributeList();
 	salida << "<" << R.getTagName();
+	if(!l.empty())
+		salida <<" ";
 	while(!l.empty())
 	{
 		salida << l.front();
 		l.pop_front();	
 	}
-	salida<< ">"<<R.getInnerHTML()<<"</"<<R.getTagName()<<">"<<endl;
+	salida<< ">"<<R.getInnerHTML();
 	return(salida);
 }
 #endif
