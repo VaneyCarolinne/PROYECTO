@@ -261,7 +261,7 @@ std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 {
 	Node *actual=A.First->firstChild();
 	stack< Node* > P,ant;
-	int i=0;
+	int i=0,j=0;
 	
 	P.push(NULL);
 	ant.push(actual);
@@ -281,13 +281,15 @@ std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 			salida <<"</" <<actual->element().getTagName()<<">"<<endl;
 			i=i-5;
 			if(ant.top()->firstChild()!=NULL&&actual->nextSibling()==NULL){
-				salida <<setw(i+1)<<"</" <<ant.top()->element().getTagName()<<">"<<endl;	
+				salida <<setw(i+1)<<"</" <<ant.top()->element().getTagName()<<">"<<endl;
+				i=i-5;	
 				ant.pop();
 			}	
 		}
 		i=i+5;
-		if(actual->firstChild()!=NULL)
+		if(actual->firstChild()!=NULL){
 			ant.push(actual);
+		}	
 		actual=P.top();
 		P.pop();	
 	}
