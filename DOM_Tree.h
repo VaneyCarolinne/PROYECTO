@@ -261,7 +261,7 @@ std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 {
 	Node *actual=A.First->firstChild();
 	stack< Node* > P,ant;
-	int i=0,j=0;
+	int i=0;
 	
 	P.push(NULL);
 	ant.push(actual);
