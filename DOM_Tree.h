@@ -259,49 +259,55 @@ void DOM_Tree::operator=(const DOM_Tree&orig)
 }
 std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 {
-	Node *actual=A.First->firstChild();
-	stack< Node* > P,ant;
-	int i=0;
+	if(A.First!=NULL){
+		Node *actual;
+		stack< Node* > P,ant;
+		int i=0;
 	
-	if(A.First->element().getTagName()!="document"){
-		actual=A.First;	
-	}else
-	{
-		salida <<"<!doctype html>"<<endl;	
-	}
-	P.push(NULL);
-	ant.push(actual);
-	while(actual!=NULL)
-	{
-		salida << setw(i)<<actual->element();
-		if(actual->nextSibling()!=NULL)
-		{
-			P.push(actual->nextSibling());	
-		}
-		if(actual->firstChild()!=NULL)
-		{
-			P.push(actual->firstChild());
-			cout <<endl;
+		if(A.First->element().getTagName()!="document"){
+			actual=A.First;	
 		}else{
-			salida <<"</" <<actual->element().getTagName()<<">"<<endl;
-			i=i-5;
-			if(ant.top()->firstChild()!=NULL&&actual->nextSibling()==NULL){
-				salida <<setw(i+1)<<"</" <<ant.top()->element().getTagName()<<">"<<endl;
-				i=i-5;	
+			actual=A.First->firstChild();
+			salida <<"<!doctype html>"<<endl;	
+		}
+		if(actual!=NULL){
+			P.push(NULL);	
+			if(actual->firstChild()!=NULL)
+				ant.push(actual);
+			while(actual!=NULL)
+			{
+				salida << setw(i)<<actual->element();
+				if(actual->nextSibling()!=NULL)
+				{
+					P.push(actual->nextSibling());	
+				}
+				if(actual->firstChild()!=NULL)
+				{
+					P.push(actual->firstChild());
+					cout <<endl;
+				}else{
+					salida <<"</" <<actual->element().getTagName()<<">"<<endl;
+					i=i-5;
+					if(!ant.empty()&&ant.top()->firstChild()!=NULL&&actual->nextSibling()==NULL){
+						salida <<setw(i+1)<<"</" <<ant.top()->element().getTagName()<<">"<<endl;
+						i=i-5;	
+						ant.pop();
+					}	
+				}
+				i=i+5;
+				if(actual->firstChild()!=NULL&&ant.top()->element().getTagName()!=actual->element().getTagName()){
+					ant.push(actual);
+				}	
+				actual=P.top();
+				P.pop();	
+			}
+			if(!ant.empty()){
+				salida <<"</" <<ant.top()->element().getTagName()<<">"<<endl;	
 				ant.pop();
 			}	
 		}
-		i=i+5;
-		if(actual->firstChild()!=NULL){
-			ant.push(actual);
-		}	
-		actual=P.top();
-		P.pop();	
 	}
-		salida <<"</" <<ant.top()->element().getTagName()<<">"<<endl;	
-		ant.pop();
-
-		return(salida);		
+	return(salida);		
 }
 /*********************************/
 /**Único Destructor de la Clase:**/
