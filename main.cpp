@@ -45,6 +45,7 @@ int main()
 	DOM=DOM_Tree(document,hijos);
 	cout << DOM;	
 	J=DOM.childNode(1);
+	cout << J;
 	V=DOM.getElementByID(html);		
 	DOM.replaceChild(1,E);		
 	DOM.removeChild(1);
