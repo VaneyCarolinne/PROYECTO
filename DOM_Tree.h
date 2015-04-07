@@ -263,9 +263,14 @@ std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 	stack< Node* > P,ant;
 	int i=0;
 	
+	if(A.First->element().getTagName()!="document"){
+		actual=A.First;	
+	}else
+	{
+		salida <<"<!doctype html>"<<endl;	
+	}
 	P.push(NULL);
 	ant.push(actual);
-	salida <<"<!doctype html>"<<endl;
 	while(actual!=NULL)
 	{
 		salida << setw(i)<<actual->element();
@@ -293,10 +298,8 @@ std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 		actual=P.top();
 		P.pop();	
 	}
-	if(ant.top()->element().getTagName()=="html"){
 		salida <<"</" <<ant.top()->element().getTagName()<<">"<<endl;	
 		ant.pop();
-	}
 
 		return(salida);		
 }
