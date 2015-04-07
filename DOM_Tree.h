@@ -293,8 +293,10 @@ std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 		actual=P.top();
 		P.pop();	
 	}
-	salida <<"</" <<ant.top()->element().getTagName()<<">"<<endl;	
-	ant.pop();
+	if(ant.top()->element().getTagName()=="html"){
+		salida <<"</" <<ant.top()->element().getTagName()<<">"<<endl;	
+		ant.pop();
+	}
 
 		return(salida);		
 }
