@@ -28,7 +28,9 @@ int main()
 			//</body>
 		//</html>
 	/**Construcción del árbol y Prueba de sus Métodos**/
+	cout<< B;
 	B=DOM_Tree(html);
+	cout << B;
 	C=DOM_Tree(head);
 	D=DOM_Tree(title);
 	E=DOM_Tree(body);
@@ -36,19 +38,24 @@ int main()
 	G=DOM_Tree(p1);
 	H=DOM_Tree(p2);
 	C.appendChild(D);
+	cout << C;
 	E.appendChild(F);
+	cout << E;
 	E.appendChild(G);
 	E.appendChild(H);
 	B.appendChild(1,C);
 	B.appendChild(2,E);
+	cout << B;
 	hijos.push_front(B);
 	DOM=DOM_Tree(document,hijos);
 	cout << DOM;	
 	J=DOM.childNode(1);
 	cout << J;
-	V=DOM.getElementByID(html);		
+	V=DOM.getElementByID(html);	
+	cout << V;	
 	DOM.replaceChild(1,E);		
+	cout << DOM;
 	DOM.removeChild(1);
-	
+	cout << DOM;
 	return 0;
 }
