@@ -10,15 +10,15 @@ using std:: list;
 
 class Element{
 	private:
-		string tagName, innerHTML;
+		string TagName, InnerHTML;
 		list<string> attrList;
 	public:
 		Element();
 		Element(const Element &copying);
 		Element(string t,list<string> l,string i);
-		string getTagName();
+		string tagName();
 		list<string> attributeList();
-		string getInnerHTML();
+		string innerHTML();
 		void setTagName(string t);
 		void setAttributeList(list<string> l);
 		void setInnerHTML(string h);
@@ -28,35 +28,35 @@ class Element{
 };
 
 Element:: Element(){
-	tagName= " ";
-	innerHTML= " ";
+	TagName= " ";
+	InnerHTML= " ";
 }
 Element:: Element(const Element &copying)
 {
-	tagName=copying.tagName;
-	innerHTML=copying.innerHTML;
+	TagName=copying.TagName;
+	InnerHTML=copying.InnerHTML;
 	attrList=copying.attrList;
 }
 Element:: Element(string t,list<string> l,string i){
-	tagName= t;
+	TagName= t;
 	attrList= l;
-	innerHTML= i;
+	InnerHTML= i;
 }
 
-string Element:: getTagName(){
-	return tagName;
+string Element:: tagName(){
+	return TagName;
 }
 
 list<string> Element:: attributeList(){
 	return attrList;
 }
 
-string Element:: getInnerHTML(){
-	return innerHTML;
+string Element:: innerHTML(){
+	return InnerHTML;
 }
 
 void Element:: setTagName(string t){
-	tagName= t;
+	TagName= t;
 }
 
 void Element:: setAttributeList(list<string> l){
@@ -64,14 +64,14 @@ void Element:: setAttributeList(list<string> l){
 }
 
 void Element:: setInnerHTML(string i){
-	innerHTML= i;
+	InnerHTML= i;
 }
 
 void Element:: operator=(const Element &R)
 {
 	if(this!=&R){
-		tagName=R.tagName;
-		innerHTML=R.innerHTML;
+		TagName=R.TagName;
+		InnerHTML=R.InnerHTML;
 		attrList=R.attrList;
 	}		
 }
@@ -79,7 +79,7 @@ bool Element:: operator==(const Element &R)
 {
 	bool band;
 	if(this!=&R){
-		if(R.tagName!=tagName||R.innerHTML!=innerHTML||R.attrList!=attrList)
+		if(R.TagName!=TagName||R.InnerHTML!=InnerHTML||R.attrList!=attrList)
 		{
 			band=false;	
 		}else{
@@ -93,7 +93,7 @@ std::ostream& operator<<(std::ostream& salida ,const Element &A)
 	Element R=A;
 	list<string> l;
 	l=R.attributeList();
-	salida << "<" << R.getTagName();
+	salida << "<" << R.tagName();
 	if(!l.empty())
 		salida <<" ";
 	while(!l.empty())
@@ -101,7 +101,7 @@ std::ostream& operator<<(std::ostream& salida ,const Element &A)
 		salida << l.front();
 		l.pop_front();	
 	}
-	salida<< ">"<<R.getInnerHTML();
+	salida<< ">"<<R.innerHTML();
 	return(salida);
 }
 #endif
