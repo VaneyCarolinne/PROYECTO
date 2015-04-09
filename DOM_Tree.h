@@ -264,7 +264,7 @@ std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 		stack< Node* > P,ant;
 		int i=0;
 	
-		if(A.First->element().getTagName()!="document"){
+		if(A.First->element().tagName()!="document"){
 			actual=A.First;	
 		}else{
 			actual=A.First->firstChild();
@@ -286,23 +286,23 @@ std::ostream& operator<<(std::ostream& salida ,const DOM_Tree &A)
 					P.push(actual->firstChild());
 					cout <<endl;
 				}else{
-					salida <<"</" <<actual->element().getTagName()<<">"<<endl;
+					salida <<"</" <<actual->element().tagName()<<">"<<endl;
 					i=i-5;
 					if(!ant.empty()&&ant.top()->firstChild()!=NULL&&actual->nextSibling()==NULL){
-						salida <<setw(i+1)<<"</" <<ant.top()->element().getTagName()<<">"<<endl;
+						salida <<setw(i+1)<<"</" <<ant.top()->element().tagName()<<">"<<endl;
 						i=i-5;	
 						ant.pop();
 					}	
 				}
 				i=i+5;
-				if(actual->firstChild()!=NULL&&ant.top()->element().getTagName()!=actual->element().getTagName()){
+				if(actual->firstChild()!=NULL&&ant.top()->element().tagName()!=actual->element().tagName()){
 					ant.push(actual);
 				}	
 				actual=P.top();
 				P.pop();	
 			}
 			if(!ant.empty()){
-				salida <<"</" <<ant.top()->element().getTagName()<<">"<<endl;	
+				salida <<"</" <<ant.top()->element().tagName()<<">"<<endl;	
 				ant.pop();
 			}	
 		}
