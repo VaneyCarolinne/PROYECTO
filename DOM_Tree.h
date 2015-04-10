@@ -21,6 +21,7 @@ class DOM_Tree
 		//Métodos de Modificación
 		Node *copiar(Node *p);
 		void destruir(Node *apRaiz);
+		DOM_Tree convertir(string h);
 	public : // (Públicos)
 		//Constructores:
 		DOM_Tree():First(NULL){}
@@ -35,6 +36,9 @@ class DOM_Tree
 		void appendChild(DOM_Tree &a);
 		void removeChild(int pos);
 		void replaceChild(int pos, DOM_Tree &subArbol);	
+		void appendChild(std::string cadena);
+		void replaceChild(int pos,std::string cadena);	
+		void appendChild(int pos,std::string cadena);
 		//Sobrecarga de operadores:
 		void operator=(const DOM_Tree &orig);
 		friend std::ostream& operator<<(std::ostream& salida ,const DOM_Tree  &A);
@@ -152,10 +156,100 @@ void DOM_Tree::appendChild(int pos,DOM_Tree &a){
 		}
 	}
 }
-	
+void DOM_Tree::replaceChild(int pos,string h)
+{
+    DOM_Tree DOM=convertir(h);
+    replaceChild(pos,h);
+}
+
+void DOM_Tree::appendChild(int pos,string h)
+{
+    DOM_Tree DOM=convertir(h);
+    appendChild(pos,DOM);
+}
+
+void DOM_Tree::appendChild(std::string cadena)
+{
+	DOM_Tree DOM=convertir(cadena);
+	appendChild(DOM);
+}
+DOM_Tree DOM_Tree::convertir(string h)
+{
+    int j, k, i;
+    Element e;
+    DOM_Tree aux;
+    string n1, n2, inn, tag, atr;
+    list<string> atrb;
+    vector<DOM_Tree> a;
+    
+
+    while(!h.empty())
+    {
+	atrb=list<string>();
+        k=h.find('<');
+        j=h.find('>');
+        if(k!=-1 && j!=-1)
+        {
+            n1=h.substr(k+1, j-k-1);
+            if(n1.find(' ')!=-1)
+            {
+                i=n1.find(' ');
+                tag=n1.substr(0, i);
+                n1.erase(0, i+1);
+                while(!n1.empty())
+                {
+                    if(n1.find(' ')!=-1)
+                    {
+                        i=n1.find(' ');
+                        atr=n1.substr(0, i);
+                        atrb.push_back(atr);
+                        n1.erase(0, i+1);
+                    }
+                    else
+                    {
+                        atrb.push_back(n1);
+                        n1.clear();
+                    }
+                }
+                n1=tag;
+            }
+            n2="</"+n1+'>';
+            h.erase(0, j+1);
+            k=h.find(n2);
+            inn=h.substr(0, k);
+            h.erase(k, n2.size());
+        }
+        else
+        {
+            inn=h;
+            h.clear();
+        }
+        
+        e=Element(n1, atrb, inn);
+        aux=DOM_Tree(e);
+        a.insert(a.begin(), aux);
+    }
+    a.erase(a.begin());
+    
+    while(!a.empty())
+    {
+        aux=a[0];
+        a.erase(a.begin()+0);
+        if(!a.empty())
+        {
+            i=0;
+            while(a[i].First->element().innerHTML().find(aux.First->element().innerHTML())==-1)
+                i++;
+            a[i].appendChild(1,aux);
+        }
+    }
+    return (aux);
+}	
 void DOM_Tree::appendChild(DOM_Tree &a){
 	
 	Node *aux;
+	if(First==NULL)
+		First=copiar(a.First);
 	if(First->firstChild()==NULL){
 		First->setFirstChild(copiar(a.First));
 	}
