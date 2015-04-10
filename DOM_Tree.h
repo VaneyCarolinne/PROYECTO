@@ -122,7 +122,6 @@ void DOM_Tree::buscar(string e,Node *aux,Node *&found)
 			k=l.front();
 			l.pop_front();
 			if(k==e){
-				cout<<"encontrado"<<endl;
 				band=true;
 			}
 			
