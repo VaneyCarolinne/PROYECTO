@@ -51,11 +51,11 @@ int main()
 	cout << DOM;	
 	J=DOM.childNode(1);
 	cout << J;
-	V=DOM.getElementByID(html);	
+	V=DOM.getElementByID("''Contenido''>");	
 	cout << V;	
 	DOM.replaceChild(1,E);		
 	cout << DOM;
 	DOM.removeChild(1);
-	cout << DOM;
+	cout << V;
 	return 0;
 }
