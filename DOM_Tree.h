@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <list>
+#include <string>
 #include <queue>
 #include <stack>
 #include "Element.h"
@@ -10,13 +11,14 @@
 using std::list;
 using std::queue;
 using std::stack;
+using std::string;
 class DOM_Tree
 {
 	private:
 	//atributos
 		Node *First;
 		//Métodos de Inspección:
-	    void buscar(Element e,Node *aux,Node *&found);
+	    void buscar(string e,Node *aux,Node *&found);
 	    void mostrar(Node *p);
 		//Métodos de Modificación
 		Node *copiar(Node *p);
@@ -30,7 +32,7 @@ class DOM_Tree
 		DOM_Tree(Element parameter,list< DOM_Tree > x);
 		//Metodos de Inspeccion:
 		DOM_Tree childNode(int pos);
-		DOM_Tree getElementByID(Element e);
+		DOM_Tree getElementByID(string e);
 		//Metodos de Modificacion:
 		void appendChild(int pos,DOM_Tree &a);
 		void appendChild(DOM_Tree &a);
@@ -97,7 +99,7 @@ DOM_Tree DOM_Tree::childNode(int pos){
 	}
 	return a;
 }
-DOM_Tree DOM_Tree::getElementByID(Element e)
+DOM_Tree DOM_Tree::getElementByID(string e)
 {
 	DOM_Tree r;
 	Node *aux;
@@ -108,11 +110,25 @@ DOM_Tree DOM_Tree::getElementByID(Element e)
 	
 	return (r);
 }
-void DOM_Tree::buscar(Element e,Node *aux,Node *&found)
+void DOM_Tree::buscar(string e,Node *aux,Node *&found)
 {
+	bool band=false;
+	list<string> l;
+	string k;
 	if(aux!=NULL)
 	{
-		if(e==aux->element())
+		l=aux->element().attributeList();
+		while(!l.empty()&&band==false){
+			k=l.front();
+			l.pop_front();
+			if(k==e){
+				cout<<"encontrado"<<endl;
+				band=true;
+			}
+			
+		}
+		
+		if(band)
 		{
 			found=aux;
 		}
