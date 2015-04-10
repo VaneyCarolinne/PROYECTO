@@ -130,13 +130,15 @@ void DOM_Tree::buscar(Element e,Node *aux,Node *&found)
 /*****************************/
 void DOM_Tree::appendChild(int pos,DOM_Tree &a){
 	
+  if(pos!=0){
 	Node *aux,*aux2,*aux3;
 	int p=1;
 	if(pos==1 && First->firstChild()==NULL){
 		First->setFirstChild(copiar(a.First));
 	}
 	else{
-		aux=First->firstChild();
+		if(First->firstChild()!=NULL)
+			aux=First->firstChild();
 		aux3=aux;
 		while(p<pos && aux->nextSibling()!=NULL){
 			aux3=aux;
@@ -155,17 +157,28 @@ void DOM_Tree::appendChild(int pos,DOM_Tree &a){
 		  }		
 		}
 	}
+  }else{
+	cerr << "Quiere insertar una posición del árbol inexistente" <<endl;  
+  }	
 }
 void DOM_Tree::replaceChild(int pos,string h)
 {
+  if(pos!=0){
     DOM_Tree DOM=convertir(h);
     replaceChild(pos,h);
+  }else{
+	cerr << "Quiere modificar una posición del árbol inexistente" <<endl;  
+  } 
 }
 
 void DOM_Tree::appendChild(int pos,string h)
 {
+   if(pos!=0){
     DOM_Tree DOM=convertir(h);
     appendChild(pos,DOM);
+   }else{
+	 cerr << "Quiere insertar una posición del árbol inexistente" <<endl;   
+   } 
 }
 
 void DOM_Tree::appendChild(std::string cadena)
@@ -274,6 +287,7 @@ Node * DOM_Tree::copiar(Node *p)
 }
 void DOM_Tree::replaceChild(int pos, DOM_Tree &subArbol)
 {
+  if(pos!=0){
 	int i;
 	Node *aux,*aux2;
 	aux=First->firstChild();
@@ -298,7 +312,10 @@ void DOM_Tree::replaceChild(int pos, DOM_Tree &subArbol)
 		}else{
 			cerr << "Quiere modificar una posición del árbol inexistente" <<endl;	
 		}	
-	}		
+	}
+  }else{
+	  cerr << "Quiere modificar una posición del árbol inexistente" <<endl;
+  }			
 }
 void DOM_Tree::removeChild(int pos)
 {
