@@ -8,10 +8,12 @@
 #include <stack>
 #include "Element.h"
 #include "Node.h"
+#include <vector>
 using std::list;
 using std::queue;
 using std::stack;
 using std::string;
+using std::vector;
 class DOM_Tree
 {
 	private:
@@ -220,6 +222,7 @@ DOM_Tree DOM_Tree::convertir(string h)
         if(k!=-1 && j!=-1)
         {
             n1=h.substr(k+1, j-k-1);
+        
             if(n1.find(' ')!=-1)
             {
                 i=n1.find(' ');
@@ -256,7 +259,7 @@ DOM_Tree DOM_Tree::convertir(string h)
         
         e=Element(n1, atrb, inn);
         aux=DOM_Tree(e);
-        a.insert(a.begin(), aux);
+        a.insert(a.begin(),aux);
     }
     a.erase(a.begin());
     
